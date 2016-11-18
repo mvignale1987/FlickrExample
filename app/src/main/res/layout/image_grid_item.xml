@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:carnival="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:columnWidth="90dp"
-    android:gravity="center"
-    android:horizontalSpacing="2dp"
-    android:numColumns="auto_fit"
-    android:orientation="vertical"
-    android:stretchMode="columnWidth"
-    android:verticalSpacing="2dp">
+    android:layout_height="wrap_content"
+    carnival:cardCornerRadius="0dp">
 
-    <ImageView
-        android:id="@+id/flickr_image"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:id="@+id/itinerary_card">
 
-</GridView>
+        <ImageView
+            android:id="@+id/flickr_image"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

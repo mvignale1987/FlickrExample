@@ -40,8 +40,11 @@ public class FlickrImagesAdapter extends RecyclerView.Adapter<FlickrImagesAdapte
     @Override
     public void onBindViewHolder(FlickrImagesAdapter.ViewHolder holder, int position) {
         Photo image = flickrImages.get(position);
-        String url = String.format("https://farm%s.staticflickr.com/%s/%s_%s.jpg",image.getFarm(),image.getSecret(),image.getId(),image.getSecret());
-        Glide.with(context).load(url).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.flickr_image);
+        String url = String.format("https://farm%s.static.flickr.com/%s/%s_%s_c.jpg", image.getFarm(), image.getServer(), image.getId(), image.getSecret());
+        Glide.with(context)
+                .load(url)
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .into(holder.flickr_image);
     }
 
     @Override
@@ -49,13 +52,13 @@ public class FlickrImagesAdapter extends RecyclerView.Adapter<FlickrImagesAdapte
         return flickrImages.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.flickr_image)
         ImageView flickr_image;
 
         public ViewHolder(View view) {
             super(view);
-            ButterKnife.bind(this,view);
+            ButterKnife.bind(this, view);
         }
     }
 }
