@@ -47,6 +47,8 @@ dependencies {
     compile 'io.reactivex:rxjava:1.2.2'
     // Timber
     compile 'com.jakewharton.timber:timber:4.3.1'
+    // Calligraphy
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     // Unit Testing
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
