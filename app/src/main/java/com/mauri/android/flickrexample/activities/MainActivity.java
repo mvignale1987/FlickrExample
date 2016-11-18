@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
 import com.mauri.android.flickrexample.R;
+import com.mauri.android.flickrexample.adapters.FlickrImagesAdapter;
 import com.mauri.android.flickrexample.app.FlickrExampleApp;
 import com.mauri.android.flickrexample.app.dependencyinjection.modules.MainActivityModule;
 import com.mauri.android.flickrexample.models.Photo;
@@ -33,8 +34,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadFlickrView(List<Photo> flickrImages){
-
-//        FlickrImagesAdapter flickrAdapter = new FlickrImagesAdapter();
-//        mFlickrView.setAdapter(flickrAdapter);
+        FlickrImagesAdapter flickrAdapter = new FlickrImagesAdapter(flickrImages,this);
+        mFlickrView.setAdapter(flickrAdapter);
     }
 }

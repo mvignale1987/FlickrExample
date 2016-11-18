@@ -41,7 +41,6 @@ public class MainActivityPresenter implements Observer<GetRecentResponse> {
 
     @Override
     public void onNext(GetRecentResponse getRecentResponse) {
-        Timber.d("response");
         mainActivity.loadFlickrView(getRecentResponse.getPhotos().getPhoto());
     }
 }
