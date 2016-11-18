@@ -12,7 +12,7 @@ public class Photos {
     private int pages;
     private int perpage;
     private String total;
-    private List<Photo> photos;
+    private List<Photo> photo;
 
     public int getPage() {
         return page;
@@ -34,8 +34,8 @@ public class Photos {
         return perpage;
     }
 
-    public void setPerpage(int perpages) {
-        this.perpage = perpages;
+    public void setPerpage(int perpage) {
+        this.perpage = perpage;
     }
 
     public String getTotal() {
@@ -46,11 +46,11 @@ public class Photos {
         this.total = total;
     }
 
-    public List<Photo> getPhotos() {
-        return photos;
+    public List<Photo> getPhoto() {
+        return photo;
     }
 
-    public void setPhotos(List<Photo> photos) {
-        this.photos = photos;
+    public void setPhoto(List<Photo> photo) {
+        this.photo = photo;
     }
 }
