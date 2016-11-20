@@ -3,7 +3,6 @@ package com.mauri.android.flickrexample.app;
 import android.app.Application;
 import android.content.Context;
 
-import com.mauri.android.flickrexample.BuildConfig;
 import com.mauri.android.flickrexample.R;
 import com.mauri.android.flickrexample.app.dependencyinjection.components.DaggerNetworkComponent;
 import com.mauri.android.flickrexample.app.dependencyinjection.components.NetworkComponent;

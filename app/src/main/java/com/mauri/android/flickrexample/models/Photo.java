@@ -11,9 +11,13 @@ public class Photo {
     private String server;
     private int farm;
     private String title;
+    private String url_c;
     private int ispublic;
     private int isfriend;
     private int isfamily;
+    // for flickr.photos.getInfo
+    private Owner full_owner;
+    private String description;
 
     public String getId() {
         return id;
@@ -85,5 +89,29 @@ public class Photo {
 
     public void setIsfamily(int isfamily) {
         this.isfamily = isfamily;
+    }
+
+    public String getUrl_c() {
+        return url_c;
+    }
+
+    public void setUrl_c(String url_c) {
+        this.url_c = url_c;
+    }
+
+    public Owner getFull_owner() {
+        return full_owner;
+    }
+
+    public void setFull_owner(Owner full_owner) {
+        this.full_owner = full_owner;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

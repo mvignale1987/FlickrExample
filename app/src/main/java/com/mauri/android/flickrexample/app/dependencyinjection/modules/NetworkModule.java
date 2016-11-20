@@ -9,6 +9,9 @@ import com.google.gson.GsonBuilder;
 import com.mauri.android.flickrexample.app.Constants;
 import com.mauri.android.flickrexample.app.FlickrExampleApp;
 import com.mauri.android.flickrexample.network.FlickrApi;
+import com.mauri.android.flickrexample.network.deserializers.PhotoJsonDeserializer;
+import com.mauri.android.flickrexample.network.responses.GetPhotoInfoResponse;
+import com.mauri.android.flickrexample.network.responses.GetRecentResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +29,6 @@ import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Url;
 
 /**
  * Created by mauri on 17/11/16.
@@ -64,6 +66,7 @@ public class NetworkModule {
     Gson provideGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
+        gsonBuilder.registerTypeAdapter(GetPhotoInfoResponse.class, new PhotoJsonDeserializer());
         return gsonBuilder.create();
     }
 

@@ -24,7 +24,7 @@ public class MainActivityPresenter implements Observer<GetRecentResponse> {
     }
 
     public void getRecentImages(){
-        flickrApi.getRecentPhotos().subscribeOn(Schedulers.newThread())
+        flickrApi.getRecentPhotos("url_c").subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this);
     }
