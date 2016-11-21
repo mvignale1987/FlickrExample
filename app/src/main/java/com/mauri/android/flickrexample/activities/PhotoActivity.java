@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -71,6 +73,9 @@ public class PhotoActivity extends BaseActivity {
         setContentView(R.layout.activity_photo);
         ButterKnife.bind(this);
         FlickrExampleApp.get(this).getNetworkComponent().plus(new PhotoActivityModule(this)).inject(this);
+        ActionBar.LayoutParams layoutParams = ((ActionBar.LayoutParams) getSupportActionBar().getCustomView().getLayoutParams());
+        layoutParams.rightMargin = Math.round(getResources().getDimension(R.dimen.title_padding));
+
         Glide.with(FlickrExampleApp.get(this)).load(getIntent().getStringExtra(PHOTO_URL)).into((mDetailImageView));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mPhotoActivityPresenter.getPhotoInfo(getIntent().getStringExtra(PHOTO_ID));

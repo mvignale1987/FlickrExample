@@ -2,8 +2,11 @@ package com.mauri.android.flickrexample.activities;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -43,6 +46,9 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         FlickrExampleApp.get(this).getNetworkComponent().plus(new MainActivityModule(this)).inject(this);
+        // Hack to center the title with ActionBar buttons
+        ActionBar.LayoutParams layoutParams = ((ActionBar.LayoutParams) getSupportActionBar().getCustomView().getLayoutParams());
+        layoutParams.leftMargin = Math.round(getResources().getDimension(R.dimen.title_padding));
         mainActivityPresenter.getRecentImages();
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
