@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">FlickrExample</string>
     <string name="change_view">Change view</string>
+    <string name="location_placeholder">No location available for this photo.</string>
 </resources>

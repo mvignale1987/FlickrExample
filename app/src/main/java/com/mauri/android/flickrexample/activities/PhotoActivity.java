@@ -2,12 +2,9 @@ package com.mauri.android.flickrexample.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NavUtils;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,14 +12,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.mauri.android.flickrexample.R;
+import com.mauri.android.flickrexample.app.Constants;
 import com.mauri.android.flickrexample.app.FlickrExampleApp;
 import com.mauri.android.flickrexample.app.dependencyinjection.modules.PhotoActivityModule;
 import com.mauri.android.flickrexample.models.Owner;
 import com.mauri.android.flickrexample.models.Photo;
 import com.mauri.android.flickrexample.presenters.PhotoActivityPresenter;
 import com.mauri.android.flickrexample.utils.BindingUtils;
+
+import java.text.SimpleDateFormat;
 
 import javax.inject.Inject;
 
@@ -50,6 +49,8 @@ public class PhotoActivity extends BaseActivity {
     TextView mPhotoLocation;
     @BindView(R.id.photo_title_and_description)
     TextView mPhotoTitleDescription;
+    @BindView(R.id.photo_date)
+    TextView mPhotoDate;
 
     @Inject
     PhotoActivityPresenter mPhotoActivityPresenter;
@@ -78,19 +79,25 @@ public class PhotoActivity extends BaseActivity {
     public void loadPhotoInfo(Photo photo) {
         Owner owner = photo.getFull_owner();
         mUsername.setText(owner.getUsername());
-        mPhotoLocation.setText(owner.getLocation());
+        if (!TextUtils.isEmpty(owner.getLocation()))
+            mPhotoLocation.setText(owner.getLocation());
+        else
+            mPhotoLocation.setText(R.string.location_placeholder);
         if ("0".equals(owner.getIconserver())) {
             Glide.with(FlickrExampleApp.get(this)).load(R.drawable.buddyicon).asBitmap().centerCrop().into(mBindingUtils.getRoundedBitmapImageView(mUserIcon));
         } else {
-            String iconUrl = String.format("http://farm%s.staticflickr.com/%s/buddyicons/%s.jpg", owner.getIconfarm(),owner.getIconserver(),owner.getNsid());
+            String iconUrl = String.format("http://farm%s.staticflickr.com/%s/buddyicons/%s.jpg", owner.getIconfarm(), owner.getIconserver(), owner.getNsid());
             Glide.with(FlickrExampleApp.get(this)).load(iconUrl).asBitmap().centerCrop().into(mBindingUtils.getRoundedBitmapImageView(mUserIcon));
         }
-        mPhotoTitleDescription.setText(photo.getTitle()+"\n"+photo.getDescription());
+        mPhotoTitleDescription.setText(photo.getTitle() + "\n" + photo.getDescription());
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM d");
+        mPhotoDate.setText(sdf.format(photo.getPhoto_date()));
+
     }
 
     @OnClick(R.id.detail_image_view)
-    void onImageClick(View view){
-        Toast.makeText(this,"TEST",Toast.LENGTH_LONG).show();
+    void onImageClick(View view) {
+        Toast.makeText(this, "TEST", Toast.LENGTH_LONG).show();
     }
 
     @Override

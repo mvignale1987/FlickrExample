@@ -1,5 +1,7 @@
 package com.mauri.android.flickrexample.models;
 
+import java.util.Date;
+
 /**
  * Created by mauri on 17/11/16.
  */
@@ -18,6 +20,7 @@ public class Photo {
     // for flickr.photos.getInfo
     private Owner full_owner;
     private String description;
+    private Date photo_date;
 
     public String getId() {
         return id;
@@ -113,5 +116,13 @@ public class Photo {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getPhoto_date() {
+        return photo_date;
+    }
+
+    public void setPhoto_date(Date photo_date) {
+        this.photo_date = photo_date;
     }
 }
