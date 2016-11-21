@@ -10,6 +10,7 @@ Pagination (wip)
 SearchBar for title and criteria (wip)
 
 ## Libraries
+```
 Dagger2
 ButterKnife
 Glide
@@ -17,6 +18,7 @@ RxJava & RxAndroid
 Retrofit
 OkHttp
 Gson
+```
 
 ## Screenshots
 
