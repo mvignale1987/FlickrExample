@@ -15,6 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.mauri.android.flickrexample.R;
 import com.mauri.android.flickrexample.activities.MainActivity;
 import com.mauri.android.flickrexample.activities.PhotoActivity;
+import com.mauri.android.flickrexample.app.FlickrExampleApp;
 import com.mauri.android.flickrexample.models.Photo;
 
 import java.util.List;
@@ -62,7 +63,7 @@ public class FlickrImagesAdapter extends RecyclerView.Adapter<FlickrImagesAdapte
         }
 
         void bindPhoto(final Photo photo){
-            Glide.with(context)
+            Glide.with(FlickrExampleApp.get(context))
                     .load(photo.getUrl_c())
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .into(flickr_image);

@@ -23,7 +23,7 @@ public class FlickrExampleApp extends Application {
     public void onCreate() {
         super.onCreate();
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath("fonts/Bryant-Regular.ttf")
+                        .setDefaultFontPath("fonts/Bryant-Regular.otf")
                         .setFontAttrId(R.attr.fontPath)
                         .build());
 
