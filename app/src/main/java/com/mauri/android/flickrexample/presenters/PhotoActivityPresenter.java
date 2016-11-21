@@ -1,6 +1,6 @@
 package com.mauri.android.flickrexample.presenters;
 
-import com.mauri.android.flickrexample.activities.PhotoActivity;
+import com.mauri.android.flickrexample.activities.PublicationActivity;
 import com.mauri.android.flickrexample.network.FlickrApi;
 import com.mauri.android.flickrexample.network.responses.GetPhotoInfoResponse;
 
@@ -15,12 +15,12 @@ import timber.log.Timber;
 
 public class PhotoActivityPresenter implements Observer<GetPhotoInfoResponse> {
 
-    private PhotoActivity photoActivity;
+    private PublicationActivity publicationActivity;
     private FlickrApi flickrApi;
 
-    public PhotoActivityPresenter(PhotoActivity view, FlickrApi flickrApi){
+    public PhotoActivityPresenter(PublicationActivity view, FlickrApi flickrApi){
         this.flickrApi = flickrApi;
-        this.photoActivity = view;
+        this.publicationActivity = view;
     }
 
     public void getPhotoInfo(String photo_id){
@@ -41,6 +41,6 @@ public class PhotoActivityPresenter implements Observer<GetPhotoInfoResponse> {
 
     @Override
     public void onNext(GetPhotoInfoResponse getPhotoInfoResponse) {
-        photoActivity.loadPhotoInfo(getPhotoInfoResponse.getPhoto());
+        publicationActivity.loadPhotoInfo(getPhotoInfoResponse.getPhoto());
     }
 }

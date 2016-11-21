@@ -1,20 +1,16 @@
 package com.mauri.android.flickrexample.adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.mauri.android.flickrexample.R;
-import com.mauri.android.flickrexample.activities.MainActivity;
-import com.mauri.android.flickrexample.activities.PhotoActivity;
+import com.mauri.android.flickrexample.activities.PublicationActivity;
 import com.mauri.android.flickrexample.app.FlickrExampleApp;
 import com.mauri.android.flickrexample.models.Photo;
 
@@ -22,7 +18,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by mauri on 17/11/16.
@@ -81,7 +76,7 @@ public class FlickrImagesAdapter extends RecyclerView.Adapter<FlickrImagesAdapte
             flickr_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    PhotoActivity.newInstance(context ,photo.getUrl_c(),photo.getId());
+                    PublicationActivity.newInstance(context ,photo.getUrl_c(),photo.getId());
                 }
             });
         }
