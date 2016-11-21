@@ -14,7 +14,7 @@ import rx.Observable;
 public interface FlickrApi {
 
     @GET("?method=flickr.photos.getRecent")
-    Observable<GetRecentResponse> getRecentPhotos(@Query("extras")String url_type);
+    Observable<GetRecentResponse> getRecentPhotos(@Query("page") int page, @Query("extras") String url_type);
 
     @GET("?method=flickr.photos.getInfo")
     Observable<GetPhotoInfoResponse> getPhotoInfo(@Query("photo_id") String id);

@@ -6,7 +6,7 @@ Also uses Glide for image handling and caching, gson For Serializing/Deserializi
 
 ## Features:
 - [x] Pull to refresh to retreive last public images
-- [ ] Pagination
+- [x] Pagination
 - [ ] SearchBar for title and criteria
 
 

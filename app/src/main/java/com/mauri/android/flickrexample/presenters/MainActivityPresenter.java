@@ -17,16 +17,23 @@ public class MainActivityPresenter implements Observer<GetRecentResponse> {
 
     private MainActivity mainActivity;
     private FlickrApi flickrApi;
+    private int mCurrentPage;
 
     public MainActivityPresenter(MainActivity view, FlickrApi flickrApi){
         this.flickrApi = flickrApi;
         this.mainActivity = view;
+        this.mCurrentPage = 1;
     }
 
     public void getRecentImages(){
-        flickrApi.getRecentPhotos("url_c").subscribeOn(Schedulers.newThread())
+        flickrApi.getRecentPhotos(mCurrentPage,"url_c").subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this);
+    }
+
+    public void resetRecentImages(){
+        mCurrentPage = 1;
+        getRecentImages();
     }
 
     @Override
@@ -41,6 +48,7 @@ public class MainActivityPresenter implements Observer<GetRecentResponse> {
 
     @Override
     public void onNext(GetRecentResponse getRecentResponse) {
-        mainActivity.loadFlickrView(getRecentResponse.getPhotos().getPhoto());
+        mCurrentPage++;
+        mainActivity.loadFlickrView(getRecentResponse.getPhotos().getPhoto(),getRecentResponse.getPhotos().getPage());
     }
 }

@@ -40,6 +40,9 @@ public class MainActivity extends BaseActivity {
     MainActivityPresenter mainActivityPresenter;
     private FlickrImagesAdapter flickrAdapter;
 
+    private GridLayoutManager mGridLayoutManager;
+    private boolean mLoading = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,22 +52,45 @@ public class MainActivity extends BaseActivity {
         // Hack to center the title with ActionBar buttons
         ActionBar.LayoutParams layoutParams = ((ActionBar.LayoutParams) getSupportActionBar().getCustomView().getLayoutParams());
         layoutParams.leftMargin = Math.round(getResources().getDimension(R.dimen.title_padding));
+        mLoading = true;
         mainActivityPresenter.getRecentImages();
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mainActivityPresenter.getRecentImages();
+                mainActivityPresenter.resetRecentImages();
             }
         });
 
         mFlickrView.setHasFixedSize(true);
-        mFlickrView.setLayoutManager(new GridLayoutManager(this, GRID_VIEW));
+        mGridLayoutManager = new GridLayoutManager(this, GRID_VIEW);
+        mFlickrView.setLayoutManager(mGridLayoutManager);
         flickrAdapter = new FlickrImagesAdapter(new ArrayList<Photo>(), this);
         mFlickrView.setAdapter(flickrAdapter);
+
+        mFlickrView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
+                    int mVisibleItemCount = mGridLayoutManager.getChildCount();
+                    int mTotalItemCount = mGridLayoutManager.getItemCount();
+                    int mPastVisibleItems = mGridLayoutManager.findFirstVisibleItemPosition();
+
+
+                    if (!mLoading) {
+                        if ((mVisibleItemCount + mPastVisibleItems) >= mTotalItemCount) {
+                            mLoading = true;
+                            mSwipeLayout.setRefreshing(true);
+                            mainActivityPresenter.getRecentImages();
+                        }
+                    }
+                }
+            }
+        });
     }
 
-    public void loadFlickrView(List<Photo> flickrImages) {
-        flickrAdapter.clear();
+    public void loadFlickrView(List<Photo> flickrImages, int page) {
+        mLoading = false;
+        if (page == 1) flickrAdapter.clear();
         flickrAdapter.addAll(flickrImages);
         if (mSwipeLayout.isRefreshing())
             mSwipeLayout.setRefreshing(false);
