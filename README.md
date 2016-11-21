@@ -5,20 +5,23 @@ MVP pattern example of Flickr API usage with Retrofir & RxAndroid for Asynchrono
 Also uses Glide for image handling and caching, gson For Serializing/Deserializing API Responses and Dagger2 / Butterknife for DI and ViewBinding.
 
 ## Features:
-Pull to refresh to retreive last public images (done)
-Pagination (wip)
-SearchBar for title and criteria (wip)
+- [x] Pull to refresh to retreive last public images
+- [ ] Pagination
+- [ ] SearchBar for title and criteria
+
 
 ## Libraries
-```
-Dagger2
-ButterKnife
-Glide
-RxJava & RxAndroid
-Retrofit
-OkHttp
-Gson
-```
+
+- Dagger2
+- ButterKnife
+- Glide
+- RxJava & RxAndroid
+- Retrofit
+- OkHttp
+- Gson
+- Calligraphy
+- Timber
+
 
 ## Screenshots
 
