@@ -14,6 +14,8 @@ import com.bumptech.glide.Glide;
 import com.mauri.android.flickrexample.R;
 import com.mauri.android.flickrexample.app.FlickrExampleApp;
 
+import org.w3c.dom.Text;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -26,17 +28,26 @@ public class PhotoActivity extends BaseActivity {
 
     @BindView(R.id.close_icon)
     ImageView mCloseIcon;
-
+    @BindView(R.id.photo_username)
+    TextView mUserName;
+    @BindView(R.id.photo_location)
+    TextView mLocation;
+    @BindView(R.id.photo_comments)
+    TextView mComments;
     @BindView(R.id.full_image)
     ImageView mFullImage;
 
     private static final String PHOTO_URL = "photo_url";
-    private static final String PHOTO_ID = "photo_id";
+    private static final String PHOTO_USERNAME = "photo_username";
+    private static final String PHOTO_LOCATION = "photo_location";
+    private static final String PHOTO_COMMENTS = "photo_comments";
 
-    public static void newInstance(Context context) {
+    public static void newInstance(Context context, String url, String username, String location, String comments) {
         Intent intent = new Intent(context, PhotoActivity.class);
-//        intent.putExtra(PHOTO_ID, photo_id);
-//        intent.putExtra(PHOTO_URL, url);
+        intent.putExtra(PHOTO_URL, url);
+        intent.putExtra(PHOTO_USERNAME, username);
+        intent.putExtra(PHOTO_LOCATION, location);
+        intent.putExtra(PHOTO_COMMENTS, comments);
         context.startActivity(intent);
     }
 
@@ -47,6 +58,11 @@ public class PhotoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
         ButterKnife.bind(this);
+        Glide.with(FlickrExampleApp.get(this)).load(getIntent().getStringExtra(PHOTO_URL)).into((mFullImage));
+        mUserName.setText(getIntent().getStringExtra(PHOTO_USERNAME));
+        mLocation.setText(getIntent().getStringExtra(PHOTO_LOCATION));
+        mComments.setText(getIntent().getStringExtra(PHOTO_COMMENTS)+ " Comments");
+
     }
 
     @OnClick(R.id.close_icon)

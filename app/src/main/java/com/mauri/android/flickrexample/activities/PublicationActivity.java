@@ -100,7 +100,7 @@ public class PublicationActivity extends BaseActivity {
 
     @OnClick(R.id.detail_image_view)
     void onImageClick(View view) {
-        PhotoActivity.newInstance(this);
+        PhotoActivity.newInstance(this,getIntent().getStringExtra(PHOTO_URL),mUsername.getText().toString(),mPhotoLocation.getText().toString(),"42" );
     }
 
     @Override
