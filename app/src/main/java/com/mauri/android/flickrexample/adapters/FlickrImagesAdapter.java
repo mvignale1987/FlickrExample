@@ -53,6 +53,16 @@ public class FlickrImagesAdapter extends RecyclerView.Adapter<FlickrImagesAdapte
         return flickrImages.size();
     }
 
+    public void clear() {
+        flickrImages.clear();
+        notifyDataSetChanged();
+    }
+
+    public void addAll(List<Photo> list) {
+        flickrImages.addAll(list);
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.flickr_image)
         ImageView flickr_image;

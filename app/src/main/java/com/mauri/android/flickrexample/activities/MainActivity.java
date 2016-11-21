@@ -1,7 +1,7 @@
 package com.mauri.android.flickrexample.activities;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -15,13 +15,13 @@ import com.mauri.android.flickrexample.app.dependencyinjection.modules.MainActiv
 import com.mauri.android.flickrexample.models.Photo;
 import com.mauri.android.flickrexample.presenters.MainActivityPresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends BaseActivity {
 
@@ -30,24 +30,39 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.flickr_view)
     RecyclerView mFlickrView;
+    @BindView(R.id.swipe_layout)
+    SwipeRefreshLayout mSwipeLayout;
 
     @Inject
     MainActivityPresenter mainActivityPresenter;
+    private FlickrImagesAdapter flickrAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        mFlickrView.setHasFixedSize(true);
-        mFlickrView.setLayoutManager(new GridLayoutManager(this, GRID_VIEW));
         FlickrExampleApp.get(this).getNetworkComponent().plus(new MainActivityModule(this)).inject(this);
         mainActivityPresenter.getRecentImages();
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mainActivityPresenter.getRecentImages();
+            }
+        });
+
+        mFlickrView.setHasFixedSize(true);
+        mFlickrView.setLayoutManager(new GridLayoutManager(this, GRID_VIEW));
+        flickrAdapter = new FlickrImagesAdapter(new ArrayList<Photo>(), this);
+        mFlickrView.setAdapter(flickrAdapter);
     }
 
     public void loadFlickrView(List<Photo> flickrImages) {
-        FlickrImagesAdapter flickrAdapter = new FlickrImagesAdapter(flickrImages, this);
-        mFlickrView.setAdapter(flickrAdapter);
+        flickrAdapter.clear();
+        flickrAdapter.addAll(flickrImages);
+        if (mSwipeLayout.isRefreshing())
+            mSwipeLayout.setRefreshing(false);
+
     }
 
     @Override
