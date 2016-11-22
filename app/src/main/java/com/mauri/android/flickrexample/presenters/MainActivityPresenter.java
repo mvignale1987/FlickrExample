@@ -1,5 +1,7 @@
 package com.mauri.android.flickrexample.presenters;
 
+import android.text.TextUtils;
+
 import com.mauri.android.flickrexample.activities.MainActivity;
 import com.mauri.android.flickrexample.interactors.GetRecentPhotosInteractor;
 import com.mauri.android.flickrexample.interactors.SearchPhotosInteractor;
@@ -43,7 +45,7 @@ public class MainActivityPresenter {
     private void getRecentImages() { mGetRecentPhotosInteractor.getData(mCurrentPage); }
 
     private void searchPhotos(String searchText) {
-        mSearchPhotosInteractor.getData(mCurrentPage,searchText);
+        mSearchPhotosInteractor.getData(mCurrentPage,lastSearchedTerm);
     }
 
     public void resetRecentImages() {
@@ -66,7 +68,7 @@ public class MainActivityPresenter {
     }
 
     public void onErrorResponse(Throwable e) {
-        Timber.d("response");
+        mainActivity.showError(e.getLocalizedMessage());
     }
 
 

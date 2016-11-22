@@ -135,7 +135,13 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.button_search)
     public void onClick(){
-        mSwipeLayout.setRefreshing(true);
-        mainActivityPresenter.searchImages(mSearchField.getText().toString());
+        String searchTerm = mSearchField.getText().toString();
+        if (!TextUtils.isEmpty(searchTerm)){
+            mSwipeLayout.setRefreshing(true);
+            mainActivityPresenter.searchImages(searchTerm);
+        } else {
+            showError("You must search for a term!!");
+        }
+
     }
 }

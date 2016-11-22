@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.mauri.android.flickrexample.R;
 
@@ -28,6 +29,10 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    public void showError(String error){
+        Toast.makeText(this,error,Toast.LENGTH_LONG).show();
     }
 
 }
