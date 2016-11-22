@@ -6,6 +6,7 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.internal.bind.TimeTypeAdapter;
 import com.mauri.android.flickrexample.app.Constants;
 import com.mauri.android.flickrexample.app.FlickrExampleApp;
 import com.mauri.android.flickrexample.network.FlickrApi;
@@ -29,6 +30,7 @@ import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import timber.log.Timber;
 
 /**
  * Created by mauri on 17/11/16.
@@ -83,7 +85,10 @@ public class NetworkModule {
                                 .addQueryParameter("format", "json")
                                 .addQueryParameter("nojsoncallback", "1");
                         req.url(urlBuilder.build());
-                        return chain.proceed(req.build());
+                        Response resp = chain.proceed(req.build());
+                        if (resp.cacheResponse()!=null)
+                            Timber.d("HIT FROM DISK CACHE");
+                        return resp;
                     }
                 })
                 .cache(cache)
