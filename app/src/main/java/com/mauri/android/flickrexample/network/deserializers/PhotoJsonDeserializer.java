@@ -29,6 +29,7 @@ public class PhotoJsonDeserializer implements JsonDeserializer<GetPhotoInfoRespo
         photo.setFull_owner(((Owner) context.deserialize(jsonPhoto.getAsJsonObject("owner"), Owner.class)));
         photo.setTitle(jsonPhoto.getAsJsonObject("title").get("_content").getAsString());
         photo.setDescription(jsonPhoto.getAsJsonObject("description").get("_content").getAsString());
+        photo.setComments(jsonPhoto.getAsJsonObject("comments").get("_content").getAsInt());
         SimpleDateFormat sdf = new SimpleDateFormat(Constants.FLICKR_DATE_FORMAT);
         try {
             photo.setPhoto_date(sdf.parse(jsonPhoto.getAsJsonObject("dates").get("taken").getAsString()));

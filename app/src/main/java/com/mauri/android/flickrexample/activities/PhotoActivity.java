@@ -42,7 +42,7 @@ public class PhotoActivity extends BaseActivity {
     private static final String PHOTO_LOCATION = "photo_location";
     private static final String PHOTO_COMMENTS = "photo_comments";
 
-    public static void newInstance(Context context, String url, String username, String location, String comments) {
+    public static void newInstance(Context context, String url, String username, String location, int comments) {
         Intent intent = new Intent(context, PhotoActivity.class);
         intent.putExtra(PHOTO_URL, url);
         intent.putExtra(PHOTO_USERNAME, username);
@@ -61,7 +61,7 @@ public class PhotoActivity extends BaseActivity {
         Glide.with(FlickrExampleApp.get(this)).load(getIntent().getStringExtra(PHOTO_URL)).into((mFullImage));
         mUserName.setText(getIntent().getStringExtra(PHOTO_USERNAME));
         mLocation.setText(getIntent().getStringExtra(PHOTO_LOCATION));
-        mComments.setText(getIntent().getStringExtra(PHOTO_COMMENTS)+ " Comments");
+        mComments.setText(getIntent().getIntExtra(PHOTO_COMMENTS, 0)+ " Comments");
 
     }
 

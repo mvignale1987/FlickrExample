@@ -2,8 +2,10 @@ package com.mauri.android.flickrexample.app.dependencyinjection.modules;
 
 import com.mauri.android.flickrexample.activities.PublicationActivity;
 import com.mauri.android.flickrexample.app.dependencyinjection.scopes.ActivityScope;
+import com.mauri.android.flickrexample.interactors.GetPhotoInfoInteractor;
+import com.mauri.android.flickrexample.interactors.SearchPhotosInteractor;
 import com.mauri.android.flickrexample.network.FlickrApi;
-import com.mauri.android.flickrexample.presenters.PhotoActivityPresenter;
+import com.mauri.android.flickrexample.presenters.PublicationActivityPresenter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -21,7 +23,13 @@ public class PublicationActivityModule {
 
     @Provides
     @ActivityScope
-    public PhotoActivityPresenter providesMainActivityPresenter(FlickrApi flickrApi) {
-        return new PhotoActivityPresenter(publicationActivity, flickrApi);
+    public GetPhotoInfoInteractor providesGetPhotoInfoInteractor(FlickrApi flickrApi){
+        return new GetPhotoInfoInteractor(flickrApi);
+    }
+
+    @Provides
+    @ActivityScope
+    public PublicationActivityPresenter providesPublicationActivityPresenter(GetPhotoInfoInteractor getPhotoInfoInteractor) {
+        return new PublicationActivityPresenter(publicationActivity, getPhotoInfoInteractor);
     }
 }

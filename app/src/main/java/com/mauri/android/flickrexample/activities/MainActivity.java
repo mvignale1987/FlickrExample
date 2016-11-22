@@ -10,6 +10,8 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.mauri.android.flickrexample.R;
 import com.mauri.android.flickrexample.adapters.FlickrImagesAdapter;
@@ -25,6 +27,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
 
@@ -35,6 +38,10 @@ public class MainActivity extends BaseActivity {
     RecyclerView mFlickrView;
     @BindView(R.id.swipe_layout)
     SwipeRefreshLayout mSwipeLayout;
+    @BindView(R.id.button_search)
+    Button mSearchButton;
+    @BindView(R.id.search_photos)
+    EditText mSearchField;
 
     @Inject
     MainActivityPresenter mainActivityPresenter;
@@ -52,6 +59,7 @@ public class MainActivity extends BaseActivity {
         // Hack to center the title with ActionBar buttons
         ActionBar.LayoutParams layoutParams = ((ActionBar.LayoutParams) getSupportActionBar().getCustomView().getLayoutParams());
         layoutParams.leftMargin = Math.round(getResources().getDimension(R.dimen.title_padding));
+
         mLoading = true;
         mainActivityPresenter.getRecentImages();
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -123,5 +131,11 @@ public class MainActivity extends BaseActivity {
             ((GridLayoutManager) mFlickrView.getLayoutManager()).setSpanCount(GRID_VIEW);
             item.setIcon(R.drawable.card_icon);
         }
+    }
+
+    @OnClick(R.id.button_search)
+    public void onClick(){
+        mSwipeLayout.setRefreshing(true);
+        mainActivityPresenter.searchImages(mSearchField.getText().toString());
     }
 }

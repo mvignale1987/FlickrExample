@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mauri.android.flickrexample.R;
@@ -18,7 +17,7 @@ import com.mauri.android.flickrexample.app.FlickrExampleApp;
 import com.mauri.android.flickrexample.app.dependencyinjection.modules.PublicationActivityModule;
 import com.mauri.android.flickrexample.models.Owner;
 import com.mauri.android.flickrexample.models.Photo;
-import com.mauri.android.flickrexample.presenters.PhotoActivityPresenter;
+import com.mauri.android.flickrexample.presenters.PublicationActivityPresenter;
 import com.mauri.android.flickrexample.utils.BindingUtils;
 
 import java.text.SimpleDateFormat;
@@ -53,10 +52,11 @@ public class PublicationActivity extends BaseActivity {
     TextView mPhotoDate;
 
     @Inject
-    PhotoActivityPresenter mPhotoActivityPresenter;
+    PublicationActivityPresenter mPublicationActivityPresenter;
     @Inject
     BindingUtils mBindingUtils;
 
+    private Photo mPhoto;
 
     public static void newInstance(Context context, String url, String photo_id) {
         Intent intent = new Intent(context, PublicationActivity.class);
@@ -76,10 +76,11 @@ public class PublicationActivity extends BaseActivity {
 
         Glide.with(FlickrExampleApp.get(this)).load(getIntent().getStringExtra(PHOTO_URL)).into((mDetailImageView));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mPhotoActivityPresenter.getPhotoInfo(getIntent().getStringExtra(PHOTO_ID));
+        mPublicationActivityPresenter.getPhotoInfo(getIntent().getStringExtra(PHOTO_ID));
     }
 
     public void loadPhotoInfo(Photo photo) {
+        mPhoto = photo;
         Owner owner = photo.getFull_owner();
         mUsername.setText(owner.getUsername());
         if (!TextUtils.isEmpty(owner.getLocation()))
@@ -100,7 +101,7 @@ public class PublicationActivity extends BaseActivity {
 
     @OnClick(R.id.detail_image_view)
     void onImageClick(View view) {
-        PhotoActivity.newInstance(this,getIntent().getStringExtra(PHOTO_URL),mUsername.getText().toString(),mPhotoLocation.getText().toString(),"42" );
+        PhotoActivity.newInstance(this,getIntent().getStringExtra(PHOTO_URL),mUsername.getText().toString(),mPhotoLocation.getText().toString(),mPhoto.getComments());
     }
 
     @Override

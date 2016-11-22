@@ -4,13 +4,37 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mauri.android.flickrexample.activities.MainActivity">
+    tools:context="com.mauri.android.flickrexample.activities.MainActivity"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:weightSum="1.0">
+        <EditText
+            android:id="@+id/search_photos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:inputType="textVisiblePassword|textNoSuggestions"
+            android:nextFocusUp="@id/search_photos"
+            android:nextFocusLeft="@id/search_photos"/>
+        <Button
+            android:id="@+id/button_search"
+            android:layout_width="wrap_content"
+            android:text="@string/search_button"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:textSize="12sp">
 
+        </Button>
+    </LinearLayout>
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/flickr_view"
             android:layout_width="match_parent"

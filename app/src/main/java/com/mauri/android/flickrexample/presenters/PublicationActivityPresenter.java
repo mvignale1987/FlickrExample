@@ -1,6 +1,7 @@
 package com.mauri.android.flickrexample.presenters;
 
 import com.mauri.android.flickrexample.activities.PublicationActivity;
+import com.mauri.android.flickrexample.interactors.GetPhotoInfoInteractor;
 import com.mauri.android.flickrexample.network.FlickrApi;
 import com.mauri.android.flickrexample.network.responses.GetPhotoInfoResponse;
 
@@ -13,34 +14,28 @@ import timber.log.Timber;
  * Created by mauri on 17/11/16.
  */
 
-public class PhotoActivityPresenter implements Observer<GetPhotoInfoResponse> {
+public class PublicationActivityPresenter {
 
     private PublicationActivity publicationActivity;
-    private FlickrApi flickrApi;
+    private GetPhotoInfoInteractor mGetPhotoInfoInteractor;
 
-    public PhotoActivityPresenter(PublicationActivity view, FlickrApi flickrApi){
-        this.flickrApi = flickrApi;
+    public PublicationActivityPresenter(PublicationActivity view, GetPhotoInfoInteractor getPhotoInfoInteractor){
         this.publicationActivity = view;
+        this.mGetPhotoInfoInteractor = getPhotoInfoInteractor;
+        mGetPhotoInfoInteractor.setPresenter(this);
     }
 
     public void getPhotoInfo(String photo_id){
-        flickrApi.getPhotoInfo(photo_id).subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this);
+        mGetPhotoInfoInteractor.getData(photo_id);
     }
 
-    @Override
-    public void onCompleted() {
 
-    }
-
-    @Override
-    public void onError(Throwable e) {
+    public void onErrorResponse(Throwable e) {
         Timber.d("response");
     }
 
-    @Override
-    public void onNext(GetPhotoInfoResponse getPhotoInfoResponse) {
+
+    public void onGetPhotoResponse(GetPhotoInfoResponse getPhotoInfoResponse) {
         publicationActivity.loadPhotoInfo(getPhotoInfoResponse.getPhoto());
     }
 }

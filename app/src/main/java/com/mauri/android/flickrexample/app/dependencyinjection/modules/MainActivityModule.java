@@ -2,6 +2,8 @@ package com.mauri.android.flickrexample.app.dependencyinjection.modules;
 
 import com.mauri.android.flickrexample.activities.MainActivity;
 import com.mauri.android.flickrexample.app.dependencyinjection.scopes.ActivityScope;
+import com.mauri.android.flickrexample.interactors.GetRecentPhotosInteractor;
+import com.mauri.android.flickrexample.interactors.SearchPhotosInteractor;
 import com.mauri.android.flickrexample.network.FlickrApi;
 import com.mauri.android.flickrexample.presenters.MainActivityPresenter;
 
@@ -21,7 +23,19 @@ public class MainActivityModule {
 
     @Provides
     @ActivityScope
-    public MainActivityPresenter providesMainActivityPresenter(FlickrApi flickrApi){
-        return new MainActivityPresenter(mainActivity,flickrApi);
+    public GetRecentPhotosInteractor providesGetRecentPhotosInteractor(FlickrApi flickrApi){
+        return new GetRecentPhotosInteractor(flickrApi);
     }
+    @Provides
+    @ActivityScope
+    public SearchPhotosInteractor providesSearchPhotosInteractor(FlickrApi flickrApi){
+        return new SearchPhotosInteractor(flickrApi);
+    }
+    @Provides
+    @ActivityScope
+    public MainActivityPresenter providesMainActivityPresenter(SearchPhotosInteractor searchPhotosInteractor, GetRecentPhotosInteractor getRecentPhotosInteractor){
+        return new MainActivityPresenter(mainActivity, getRecentPhotosInteractor,searchPhotosInteractor);
+    }
+
+
 }

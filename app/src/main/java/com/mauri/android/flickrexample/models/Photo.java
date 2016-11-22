@@ -20,6 +20,7 @@ public class Photo {
     // for flickr.photos.getInfo
     private Owner full_owner;
     private String description;
+    private int comments;
     private Date photo_date;
 
     public String getId() {
@@ -124,5 +125,13 @@ public class Photo {
 
     public void setPhoto_date(Date photo_date) {
         this.photo_date = photo_date;
+    }
+
+    public int getComments() {
+        return comments;
+    }
+
+    public void setComments(int comments) {
+        this.comments = comments;
     }
 }
