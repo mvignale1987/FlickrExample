@@ -25,8 +25,8 @@ public class SearchPhotosInteractor implements Observer<GetRecentResponse> {
         this.flickrApi = flickrApi;
     }
 
-    public void getData(String text){
-        flickrApi.searchPhotos(text, "url_c")
+    public void getData(int page,String text){
+        flickrApi.searchPhotos(page,text, "url_c")
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this);

@@ -17,7 +17,7 @@ public interface FlickrApi {
     Observable<GetRecentResponse> getRecentPhotos(@Query("page") int page, @Query("extras") String url_type);
 
     @GET("?method=flickr.photos.search")
-    Observable<GetRecentResponse> searchPhotos(@Query("text") String text, @Query("extras") String url_type);
+    Observable<GetRecentResponse> searchPhotos(@Query("page") int page,@Query("text") String text, @Query("extras") String url_type);
 
     @GET("?method=flickr.photos.getInfo")
     Observable<GetPhotoInfoResponse> getPhotoInfo(@Query("photo_id") String id);

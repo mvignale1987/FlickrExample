@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity {
         layoutParams.leftMargin = Math.round(getResources().getDimension(R.dimen.title_padding));
 
         mLoading = true;
-        mainActivityPresenter.getRecentImages();
+        mainActivityPresenter.resetRecentImages();
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -88,7 +88,7 @@ public class MainActivity extends BaseActivity {
                         if ((mVisibleItemCount + mPastVisibleItems) >= mTotalItemCount) {
                             mLoading = true;
                             mSwipeLayout.setRefreshing(true);
-                            mainActivityPresenter.getRecentImages();
+                            mainActivityPresenter.getLastPaginatedService();
                         }
                     }
                 }

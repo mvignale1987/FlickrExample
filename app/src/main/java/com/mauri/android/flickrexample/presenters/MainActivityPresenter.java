@@ -19,10 +19,16 @@ import timber.log.Timber;
 
 public class MainActivityPresenter {
 
+    private static final int LAST_CALLED_RECENT = 100;
+    private static final int LAST_CALLED_SEARCH = 101;
+
+
     private MainActivity mainActivity;
     private GetRecentPhotosInteractor mGetRecentPhotosInteractor;
     private SearchPhotosInteractor mSearchPhotosInteractor;
     private int mCurrentPage;
+    private String lastSearchedTerm = "";
+    private int mLastCalledService = 0;
 
     public MainActivityPresenter(MainActivity view, GetRecentPhotosInteractor getRecentPhotosInteractor, SearchPhotosInteractor searchPhotosInteractor) {
         this.mCurrentPage = 1;
@@ -34,12 +40,10 @@ public class MainActivityPresenter {
 
     }
 
-    public void getRecentImages() {
-        mGetRecentPhotosInteractor.getData(mCurrentPage);
-    }
+    private void getRecentImages() { mGetRecentPhotosInteractor.getData(mCurrentPage); }
 
     private void searchPhotos(String searchText) {
-        mSearchPhotosInteractor.getData(searchText);
+        mSearchPhotosInteractor.getData(mCurrentPage,searchText);
     }
 
     public void resetRecentImages() {
@@ -47,9 +51,17 @@ public class MainActivityPresenter {
         getRecentImages();
     }
 
+    public void getLastPaginatedService() {
+        if (mLastCalledService == LAST_CALLED_RECENT)
+            getRecentImages();
+        else
+            searchPhotos(lastSearchedTerm);
+
+    }
 
     public void searchImages(String searchText) {
         mCurrentPage = 1;
+        lastSearchedTerm = searchText;
         searchPhotos(searchText);
     }
 
@@ -58,12 +70,15 @@ public class MainActivityPresenter {
     }
 
 
-    public void onGetRecentResponse(GetRecentResponse getRecentResponse){
+    public void onGetRecentResponse(GetRecentResponse getRecentResponse) {
+        mLastCalledService = LAST_CALLED_RECENT;
         mCurrentPage++;
         mainActivity.loadFlickrView(getRecentResponse.getPhotos().getPhoto(), getRecentResponse.getPhotos().getPage());
     }
 
-    public void onSearchPhotoResponse(GetRecentResponse getRecentResponse){
+    public void onSearchPhotoResponse(GetRecentResponse getRecentResponse) {
+        mLastCalledService = LAST_CALLED_SEARCH;
+        mCurrentPage++;
         mainActivity.loadFlickrView(getRecentResponse.getPhotos().getPhoto(), getRecentResponse.getPhotos().getPage());
     }
 }
