@@ -23,3 +23,32 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-keep class retrofit.** { *; }
+-dontwarn sun.misc.Unsafe
+-dontwarn retrofit.appengine.UrlFetchClient
+-keepattributes Signature
+-keepattributes Exceptions
+-keepclasseswithmembers class * {
+    @retrofit.http.* <methods>;
+}
+-keep class com.google.gson.** { *; }
+-keep class com.google.inject.** { *; }
+-keep class org.apache.http.** { *; }
+-keep class org.apache.james.mime4j.** { *; }
+-keep class javax.inject.** { *; }
+-keep class retrofit.** { *; }
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+-dontwarn org.apache.http.**
+-dontwarn android.net.http.AndroidHttpClient
+-dontwarn retrofit.**
+-dontwarn okio.**
+-dontwarn rx.**
+-dontwarn sun.misc.**
+-dontwarn retrofit2.Platform$Java8
+-dontwarn okhttp3.**
+
+-keep class com.bumptech.glide.integration.okhttp3.OkHttpGlideModule
+
+# ALSO REMEMBER KEEPING YOUR MODEL CLASSES
+-keep class com.mauri.android.flickrexample.models.** { *; }
