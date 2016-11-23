@@ -24,5 +24,15 @@ Also uses Glide for image handling and caching, gson For Serializing/Deserializi
 
 
 ## Screenshots
+### Grid Screen
 
-Under Construction
+![Grid Screen](/screens/screen1.png?raw=true "Grid Screen")
+
+### Card Screen
+![Card Screen](/screens/screen2.png?raw=true "Card Screen")
+
+### Detail Screen
+![Photo Detail Screen](/screens/screen3.png?raw=true "Detail Screen")
+
+### Photo Screen
+![Last Screen](/screens/screen4.png?raw=true "Photo Screen")
