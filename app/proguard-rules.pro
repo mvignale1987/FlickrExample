@@ -18,37 +18,37 @@
 
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# -keepattributes SourceFile,LineNumberTable,SourceFileName
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
-#-renamesourcefileattribute SourceFile
--keep class retrofit.** { *; }
--dontwarn sun.misc.Unsafe
--dontwarn retrofit.appengine.UrlFetchClient
--keepattributes Signature
--keepattributes Exceptions
--keepclasseswithmembers class * {
-    @retrofit.http.* <methods>;
+# -renamesourcefileattribute SourceFile
+
+# Butterknife
+-keep class butterknife.** { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewBinder { *; }
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
 }
--keep class com.google.gson.** { *; }
--keep class com.google.inject.** { *; }
--keep class org.apache.http.** { *; }
--keep class org.apache.james.mime4j.** { *; }
--keep class javax.inject.** { *; }
--keep class retrofit.** { *; }
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}
+# OkHttp3
+-keepattributes Signature
+-keepattributes *Annotation*
 -keep class okhttp3.** { *; }
 -keep interface okhttp3.** { *; }
--dontwarn org.apache.http.**
--dontwarn android.net.http.AndroidHttpClient
--dontwarn retrofit.**
--dontwarn okio.**
--dontwarn rx.**
--dontwarn sun.misc.**
--dontwarn retrofit2.Platform$Java8
 -dontwarn okhttp3.**
+-dontnote okhttp3.**
 
--keep class com.bumptech.glide.integration.okhttp3.OkHttpGlideModule
+# Okio
+-keep class sun.misc.Unsafe { *; }
+-dontwarn java.nio.file.*
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 
-# ALSO REMEMBER KEEPING YOUR MODEL CLASSES
--keep class com.mauri.android.flickrexample.models.** { *; }
+# Gson
+-keep class sun.misc.Unsafe { *; }
+-keep class com.google.gson.stream.** { *; }

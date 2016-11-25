@@ -12,20 +12,20 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 //    HACK: when trying to build release uncomment this lines and point to proper keystore
-//    signingConfigs {
-//        release {
-//            storeFile file("/home/mauri/.android/debug.keystore")
-//            storePassword "android"
-//            keyAlias "androiddebugkey"
-//            keyPassword "android"
-//        }
-//    }
+    signingConfigs {
+        release {
+            storeFile file("/home/mauri/.android/debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+    }
     buildTypes {
         release {
 //            HACK: when trying to build release uncomment this line
-//            signingConfig signingConfigs.release
-            minifyEnabled true
-            shrinkResources true
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
