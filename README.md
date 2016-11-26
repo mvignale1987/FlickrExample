@@ -1,7 +1,7 @@
 # FlickrExample
 Basic example of flickr API
 
-MVP pattern example of Flickr API usage with Retrofir & RxAndroid for Asynchronous networking.
+MVP pattern example of Flickr API usage with Retrofit & RxAndroid for Asynchronous networking.
 Also uses Glide for image handling and caching, gson For Serializing/Deserializing API Responses and Dagger2 / Butterknife for DI and ViewBinding.
 
 Also features Proguard rules to compile a release version with minified and obfuscated sources.

@@ -18,7 +18,7 @@
 
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
- -keepattributes SourceFile,LineNumberTable,SourceFileName
+# -keepattributes SourceFile,LineNumberTable,SourceFileName
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
@@ -73,8 +73,6 @@
 # Retrofit2
 -dontwarn retrofit2.**
 -keep class retrofit2.** { *; }
--dontwarn com.octo.android.robospice.retrofit.RetrofitJackson**
--dontwarn retrofit2.appengine.UrlFetchClient
 -keepclasseswithmembers class * {
     @retrofit2.http.* <methods>;
 }
@@ -82,11 +80,10 @@
 -keep class org.apache.http.** { *; }
 -keep class org.apache.james.mime4j.** { *; }
 -keep class javax.inject.** { *; }
--keep class retrofit.** { *; }
 -dontwarn org.apache.http.**
 -dontwarn android.net.http.AndroidHttpClient
--dontwarn retrofit2.**
 
+# Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
     **[] $VALUES;
@@ -95,6 +92,7 @@
 
 -keep public class * implements com.bumptech.glide.module.GlideModule
 
+# Gson models
 -keep class com.mauri.android.flickrexample.models.** { *; }
 -keep class com.mauri.android.flickrexample.network.responses.** { *; }
 
