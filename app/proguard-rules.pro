@@ -18,7 +18,7 @@
 
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
-# -keepattributes SourceFile,LineNumberTable,SourceFileName
+ -keepattributes SourceFile,LineNumberTable,SourceFileName
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
@@ -36,6 +36,7 @@
 -keepclasseswithmembernames class * {
     @butterknife.* <methods>;
 }
+
 # OkHttp3
 -keepattributes Signature
 -keepattributes *Annotation*
@@ -51,4 +52,50 @@
 
 # Gson
 -keep class sun.misc.Unsafe { *; }
--keep class com.google.gson.stream.** { *; }
+-keep class com.google.gson.** { *; }
+
+# RxJava
+-dontwarn sun.misc.**
+
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+   long producerIndex;
+   long consumerIndex;
+}
+
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode producerNode;
+}
+
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode consumerNode;
+}
+
+# Retrofit2
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-dontwarn com.octo.android.robospice.retrofit.RetrofitJackson**
+-dontwarn retrofit2.appengine.UrlFetchClient
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
+-keep class com.google.inject.** { *; }
+-keep class org.apache.http.** { *; }
+-keep class org.apache.james.mime4j.** { *; }
+-keep class javax.inject.** { *; }
+-keep class retrofit.** { *; }
+-dontwarn org.apache.http.**
+-dontwarn android.net.http.AndroidHttpClient
+-dontwarn retrofit2.**
+
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+    **[] $VALUES;
+    public *;
+}
+
+-keep public class * implements com.bumptech.glide.module.GlideModule
+
+-keep class com.mauri.android.flickrexample.models.** { *; }
+-keep class com.mauri.android.flickrexample.network.responses.** { *; }
+
+
