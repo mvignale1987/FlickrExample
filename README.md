@@ -10,7 +10,7 @@ Also features Proguard rules to compile a release version with minified and obfu
 - [x] Pull to refresh to retreive last public images
 - [x] Pagination
 - [x] SearchBar for title and criteria
-- []  Animations
+- [ ]  Animations
 
 
 ## Libraries
