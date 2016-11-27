@@ -1,9 +1,12 @@
 package com.mauri.android.flickrexample.models;
 
+import org.parceler.Parcel;
+
 /**
  * Created by mauri on 17/11/16.
  */
 
+@Parcel
 public class Owner {
     private String nsid;
     private String username;

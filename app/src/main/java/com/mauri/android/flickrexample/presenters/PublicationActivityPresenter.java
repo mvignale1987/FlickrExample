@@ -22,7 +22,6 @@ public class PublicationActivityPresenter {
     public PublicationActivityPresenter(PublicationActivity view, GetPhotoInfoInteractor getPhotoInfoInteractor){
         this.publicationActivity = view;
         this.mGetPhotoInfoInteractor = getPhotoInfoInteractor;
-        mGetPhotoInfoInteractor.setPresenter(this);
     }
 
     public void getPhotoInfo(String photo_id){

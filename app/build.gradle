@@ -12,18 +12,18 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 //    HACK: when trying to build release uncomment this lines and point to proper keystore
-//    signingConfigs {
-//        release {
-//            storeFile file("/home/mauri/.android/debug.keystore")
-//            storePassword "android"
-//            keyAlias "androiddebugkey"
-//            keyPassword "android"
-//        }
-//    }
+    signingConfigs {
+        release {
+            storeFile file("/home/mauri/.android/debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+    }
     buildTypes {
         release {
 //            HACK: when trying to build release uncomment this line
-//            signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -61,6 +61,9 @@ dependencies {
     compile 'com.jakewharton.timber:timber:4.3.1'
     // Calligraphy
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
+    // Parceler
+    compile 'org.parceler:parceler-api:1.1.6'
+    annotationProcessor 'org.parceler:parceler:1.1.6'
     // Unit Testing
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'

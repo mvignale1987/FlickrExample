@@ -92,6 +92,11 @@
 
 -keep public class * implements com.bumptech.glide.module.GlideModule
 
+# Parceler
+-keep interface org.parceler.Parcel
+-keep @org.parceler.Parcel class * { *; }
+-keep class **$$Parcelable { *; }
+
 # Gson models
 -keep class com.mauri.android.flickrexample.models.** { *; }
 -keep class com.mauri.android.flickrexample.network.responses.** { *; }

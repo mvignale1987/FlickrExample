@@ -21,7 +21,6 @@ public class GetPhotoInfoInteractor implements Observer<GetPhotoInfoResponse> {
     private FlickrApi flickrApi;
     private PublicationActivityPresenter mPresenter;
 
-    @Inject
     public GetPhotoInfoInteractor(FlickrApi flickrApi){
         this.flickrApi = flickrApi;
     }

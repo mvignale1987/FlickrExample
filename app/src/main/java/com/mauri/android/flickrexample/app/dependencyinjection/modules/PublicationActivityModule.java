@@ -23,13 +23,9 @@ public class PublicationActivityModule {
 
     @Provides
     @ActivityScope
-    public GetPhotoInfoInteractor providesGetPhotoInfoInteractor(FlickrApi flickrApi){
-        return new GetPhotoInfoInteractor(flickrApi);
-    }
-
-    @Provides
-    @ActivityScope
     public PublicationActivityPresenter providesPublicationActivityPresenter(GetPhotoInfoInteractor getPhotoInfoInteractor) {
-        return new PublicationActivityPresenter(publicationActivity, getPhotoInfoInteractor);
+        PublicationActivityPresenter publicationActivityPresenter = new PublicationActivityPresenter(publicationActivity, getPhotoInfoInteractor);
+        getPhotoInfoInteractor.setPresenter(publicationActivityPresenter);
+        return publicationActivityPresenter;
     }
 }

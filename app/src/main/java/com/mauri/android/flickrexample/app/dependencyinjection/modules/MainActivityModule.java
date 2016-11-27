@@ -23,18 +23,11 @@ public class MainActivityModule {
 
     @Provides
     @ActivityScope
-    public GetRecentPhotosInteractor providesGetRecentPhotosInteractor(FlickrApi flickrApi){
-        return new GetRecentPhotosInteractor(flickrApi);
-    }
-    @Provides
-    @ActivityScope
-    public SearchPhotosInteractor providesSearchPhotosInteractor(FlickrApi flickrApi){
-        return new SearchPhotosInteractor(flickrApi);
-    }
-    @Provides
-    @ActivityScope
     public MainActivityPresenter providesMainActivityPresenter(SearchPhotosInteractor searchPhotosInteractor, GetRecentPhotosInteractor getRecentPhotosInteractor){
-        return new MainActivityPresenter(mainActivity, getRecentPhotosInteractor,searchPhotosInteractor);
+        MainActivityPresenter mainPresenter  = new MainActivityPresenter(mainActivity, getRecentPhotosInteractor,searchPhotosInteractor);
+        getRecentPhotosInteractor.setPresenter(mainPresenter);
+        searchPhotosInteractor.setPresenter(mainPresenter);
+        return mainPresenter;
     }
 
 

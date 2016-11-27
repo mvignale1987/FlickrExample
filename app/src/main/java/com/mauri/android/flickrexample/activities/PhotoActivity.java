@@ -13,7 +13,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mauri.android.flickrexample.R;
 import com.mauri.android.flickrexample.app.FlickrExampleApp;
+import com.mauri.android.flickrexample.models.Photo;
 
+import org.parceler.Parcels;
 import org.w3c.dom.Text;
 
 import butterknife.BindView;
@@ -37,19 +39,15 @@ public class PhotoActivity extends BaseActivity {
     @BindView(R.id.full_image)
     ImageView mFullImage;
 
-    private static final String PHOTO_URL = "photo_url";
-    private static final String PHOTO_USERNAME = "photo_username";
-    private static final String PHOTO_LOCATION = "photo_location";
-    private static final String PHOTO_COMMENTS = "photo_comments";
+    private static final String PHOTO = "photo";
 
-    public static void newInstance(Context context, String url, String username, String location, int comments) {
+    public static void newInstance(Context context, Photo photo) {
         Intent intent = new Intent(context, PhotoActivity.class);
-        intent.putExtra(PHOTO_URL, url);
-        intent.putExtra(PHOTO_USERNAME, username);
-        intent.putExtra(PHOTO_LOCATION, location);
-        intent.putExtra(PHOTO_COMMENTS, comments);
+        intent.putExtra(PHOTO, Parcels.wrap(photo));
         context.startActivity(intent);
     }
+
+    private Photo mPhoto;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,10 +56,11 @@ public class PhotoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
         ButterKnife.bind(this);
-        Glide.with(FlickrExampleApp.get(this)).load(getIntent().getStringExtra(PHOTO_URL)).into((mFullImage));
-        mUserName.setText(getIntent().getStringExtra(PHOTO_USERNAME));
-        mLocation.setText(getIntent().getStringExtra(PHOTO_LOCATION));
-        mComments.setText(getIntent().getIntExtra(PHOTO_COMMENTS, 0)+ " Comments");
+        mPhoto = Parcels.unwrap(getIntent().getParcelableExtra(PHOTO));
+        Glide.with(FlickrExampleApp.get(this)).load(mPhoto.getUrl_c()).into((mFullImage));
+        mUserName.setText(mPhoto.getFull_owner().getUsername());
+        mLocation.setText(mPhoto.getFull_owner().getLocation());
+        mComments.setText(mPhoto.getComments() + " Comments");
 
     }
 

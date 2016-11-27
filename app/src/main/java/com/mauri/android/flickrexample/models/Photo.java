@@ -1,11 +1,14 @@
 package com.mauri.android.flickrexample.models;
 
+import org.parceler.Parcel;
+
 import java.util.Date;
 
 /**
  * Created by mauri on 17/11/16.
  */
 
+@Parcel
 public class Photo {
     private String id;
     private String owner;

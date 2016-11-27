@@ -20,7 +20,6 @@ public class SearchPhotosInteractor implements Observer<GetRecentResponse> {
     private FlickrApi flickrApi;
     private MainActivityPresenter mPresenter;
 
-    @Inject
     public SearchPhotosInteractor(FlickrApi flickrApi){
         this.flickrApi = flickrApi;
     }

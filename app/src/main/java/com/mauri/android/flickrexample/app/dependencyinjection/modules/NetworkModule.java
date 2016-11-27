@@ -9,6 +9,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.internal.bind.TimeTypeAdapter;
 import com.mauri.android.flickrexample.app.Constants;
 import com.mauri.android.flickrexample.app.FlickrExampleApp;
+import com.mauri.android.flickrexample.app.dependencyinjection.scopes.ActivityScope;
+import com.mauri.android.flickrexample.interactors.GetPhotoInfoInteractor;
+import com.mauri.android.flickrexample.interactors.GetRecentPhotosInteractor;
+import com.mauri.android.flickrexample.interactors.SearchPhotosInteractor;
 import com.mauri.android.flickrexample.network.FlickrApi;
 import com.mauri.android.flickrexample.network.deserializers.PhotoJsonDeserializer;
 import com.mauri.android.flickrexample.network.responses.GetPhotoInfoResponse;
@@ -85,7 +89,8 @@ public class NetworkModule {
                                 .addQueryParameter("format", "json")
                                 .addQueryParameter("nojsoncallback", "1");
                         req.url(urlBuilder.build());
-                        Response resp = chain.proceed(req.build());
+                        Response resp = chain.proceed
+                                (req.build());
                         if (resp.cacheResponse()!=null)
                             Timber.d("HIT FROM DISK CACHE");
                         return resp;
@@ -117,4 +122,20 @@ public class NetworkModule {
         return retrofit.create(FlickrApi.class);
     }
 
+    @Provides
+    @Singleton
+    public GetPhotoInfoInteractor providesGetPhotoInfoInteractor(FlickrApi flickrApi){
+        return new GetPhotoInfoInteractor(flickrApi);
+    }
+
+    @Provides
+    @Singleton
+    public GetRecentPhotosInteractor providesGetRecentPhotosInteractor(FlickrApi flickrApi){
+        return new GetRecentPhotosInteractor(flickrApi);
+    }
+    @Provides
+    @Singleton
+    public SearchPhotosInteractor providesSearchPhotosInteractor(FlickrApi flickrApi){
+        return new SearchPhotosInteractor(flickrApi);
+    }
 }

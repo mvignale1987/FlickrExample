@@ -38,8 +38,6 @@ public class MainActivityPresenter {
         this.mainActivity = view;
         this.mGetRecentPhotosInteractor = getRecentPhotosInteractor;
         this.mSearchPhotosInteractor = searchPhotosInteractor;
-        mGetRecentPhotosInteractor.setPresenter(this);
-        mSearchPhotosInteractor.setPresenter(this);
 
     }
 

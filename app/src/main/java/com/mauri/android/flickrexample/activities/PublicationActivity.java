@@ -81,6 +81,7 @@ public class PublicationActivity extends BaseActivity {
 
     public void loadPhotoInfo(Photo photo) {
         mPhoto = photo;
+        mPhoto.setUrl_c(getIntent().getStringExtra(PHOTO_URL));
         Owner owner = photo.getFull_owner();
         mUsername.setText(owner.getUsername());
         if (!TextUtils.isEmpty(owner.getLocation()))
@@ -101,7 +102,7 @@ public class PublicationActivity extends BaseActivity {
 
     @OnClick(R.id.detail_image_view)
     void onImageClick(View view) {
-        PhotoActivity.newInstance(this,getIntent().getStringExtra(PHOTO_URL),mUsername.getText().toString(),mPhotoLocation.getText().toString(),mPhoto.getComments());
+        PhotoActivity.newInstance(this,mPhoto);
     }
 
     @Override

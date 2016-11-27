@@ -20,7 +20,6 @@ public class GetRecentPhotosInteractor implements Observer<GetRecentResponse> {
     private FlickrApi flickrApi;
     private MainActivityPresenter mPresenter;
 
-    @Inject
     public GetRecentPhotosInteractor(FlickrApi flickrApi){
         this.flickrApi = flickrApi;
     }
