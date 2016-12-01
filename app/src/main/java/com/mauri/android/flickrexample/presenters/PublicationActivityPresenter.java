@@ -14,7 +14,7 @@ import timber.log.Timber;
  * Created by mauri on 17/11/16.
  */
 
-public class PublicationActivityPresenter {
+public class PublicationActivityPresenter implements GetPhotoInfoInteractor.GetPhotoInfoListener {
 
     private PublicationActivity publicationActivity;
     private GetPhotoInfoInteractor mGetPhotoInfoInteractor;
@@ -33,7 +33,7 @@ public class PublicationActivityPresenter {
         Timber.d("response");
     }
 
-
+    @Override
     public void onGetPhotoResponse(GetPhotoInfoResponse getPhotoInfoResponse) {
         publicationActivity.loadPhotoInfo(getPhotoInfoResponse.getPhoto());
     }

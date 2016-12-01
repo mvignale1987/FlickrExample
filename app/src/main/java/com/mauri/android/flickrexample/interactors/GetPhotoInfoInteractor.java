@@ -19,7 +19,12 @@ import rx.schedulers.Schedulers;
 public class GetPhotoInfoInteractor implements Observer<GetPhotoInfoResponse> {
 
     private FlickrApi flickrApi;
-    private PublicationActivityPresenter mPresenter;
+    private GetPhotoInfoListener mGetPhotoInfoListener;
+
+    public interface GetPhotoInfoListener{
+        void onGetPhotoResponse(GetPhotoInfoResponse getPhotoInfoResponse);
+        void onErrorResponse(Throwable e);
+    }
 
     public GetPhotoInfoInteractor(FlickrApi flickrApi){
         this.flickrApi = flickrApi;
@@ -31,9 +36,8 @@ public class GetPhotoInfoInteractor implements Observer<GetPhotoInfoResponse> {
                 .subscribe(this);
     }
 
-    // TODO: this should be a generic Presenter, a Service is an atomic use case from business logic, it can be called from anywhere
-    public void setPresenter(PublicationActivityPresenter publicationActivityPresenter){
-        this.mPresenter = publicationActivityPresenter;
+    public void setListener(GetPhotoInfoListener getPhotoInfoListener){
+        this.mGetPhotoInfoListener = getPhotoInfoListener;
     }
 
     @Override
@@ -43,11 +47,11 @@ public class GetPhotoInfoInteractor implements Observer<GetPhotoInfoResponse> {
 
     @Override
     public void onError(Throwable e) {
-        mPresenter.onErrorResponse(e);
+        mGetPhotoInfoListener.onErrorResponse(e);
     }
 
     @Override
     public void onNext(GetPhotoInfoResponse getPhotoInfoResponse) {
-        mPresenter.onGetPhotoResponse(getPhotoInfoResponse);
+        mGetPhotoInfoListener.onGetPhotoResponse(getPhotoInfoResponse);
     }
 }

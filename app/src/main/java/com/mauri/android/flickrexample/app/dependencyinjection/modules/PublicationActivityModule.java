@@ -25,7 +25,7 @@ public class PublicationActivityModule {
     @ActivityScope
     public PublicationActivityPresenter providesPublicationActivityPresenter(GetPhotoInfoInteractor getPhotoInfoInteractor) {
         PublicationActivityPresenter publicationActivityPresenter = new PublicationActivityPresenter(publicationActivity, getPhotoInfoInteractor);
-        getPhotoInfoInteractor.setPresenter(publicationActivityPresenter);
+        getPhotoInfoInteractor.setListener(publicationActivityPresenter);
         return publicationActivityPresenter;
     }
 }
