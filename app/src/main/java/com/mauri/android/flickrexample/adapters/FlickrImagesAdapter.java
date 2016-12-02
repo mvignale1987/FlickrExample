@@ -6,9 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.mauri.android.flickrexample.R;
 import com.mauri.android.flickrexample.activities.PublicationActivity;
 import com.mauri.android.flickrexample.app.FlickrExampleApp;
@@ -40,6 +44,7 @@ public class FlickrImagesAdapter extends RecyclerView.Adapter<FlickrImagesAdapte
 
     @Override
     public void onBindViewHolder(FlickrImagesAdapter.ViewHolder holder, int position) {
+        holder.progress_bar.setVisibility(View.VISIBLE);
         holder.bindPhoto(flickrImages.get(position));
     }
 
@@ -61,6 +66,8 @@ public class FlickrImagesAdapter extends RecyclerView.Adapter<FlickrImagesAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.flickr_image)
         ImageView flickr_image;
+        @BindView(R.id.progressBar)
+        ProgressBar progress_bar;
 
         public ViewHolder(View view) {
             super(view);
@@ -71,14 +78,20 @@ public class FlickrImagesAdapter extends RecyclerView.Adapter<FlickrImagesAdapte
             Glide.with(FlickrExampleApp.get(context))
                     .load(photo.getUrl_c())
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                    .into(flickr_image);
+                    .listener(new RequestListener<String, GlideDrawable>() {
+                        @Override
+                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                            return false;
+                        }
 
-            flickr_image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    PublicationActivity.newInstance(context ,photo.getUrl_c(),photo.getId());
-                }
-            });
+                        @Override
+                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                            progress_bar.setVisibility(View.GONE);
+                            return false;
+                        }
+                    })
+                    .into(flickr_image);
+            flickr_image.setOnClickListener(view -> PublicationActivity.newInstance(context ,photo.getUrl_c(),photo.getId()));
         }
     }
 }

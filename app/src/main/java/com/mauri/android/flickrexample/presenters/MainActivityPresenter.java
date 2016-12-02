@@ -1,26 +1,15 @@
 package com.mauri.android.flickrexample.presenters;
 
-import android.text.TextUtils;
-import android.util.Log;
-
 import com.mauri.android.flickrexample.activities.MainActivity;
 import com.mauri.android.flickrexample.interactors.GetRecentPhotosInteractor;
 import com.mauri.android.flickrexample.interactors.SearchPhotosInteractor;
-import com.mauri.android.flickrexample.network.FlickrApi;
 import com.mauri.android.flickrexample.network.responses.GetRecentResponse;
-
-import javax.inject.Inject;
-
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import timber.log.Timber;
 
 /**
  * Created by mauri on 17/11/16.
  */
 
-public class MainActivityPresenter {
+public class MainActivityPresenter implements SearchPhotosInteractor.SearchPhotoListener, GetRecentPhotosInteractor.RecentPhotosListener{
 
     private static final int LAST_CALLED_RECENT = 100;
     private static final int LAST_CALLED_SEARCH = 101;
@@ -66,17 +55,19 @@ public class MainActivityPresenter {
         searchPhotos();
     }
 
+    @Override
     public void onErrorResponse(Throwable e) {
         mainActivity.showError(e.getLocalizedMessage());
     }
 
-
+    @Override
     public void onGetRecentResponse(GetRecentResponse getRecentResponse) {
         mLastCalledService = LAST_CALLED_RECENT;
         mCurrentPage++;
         mainActivity.loadFlickrView(getRecentResponse.getPhotos().getPhoto(), getRecentResponse.getPhotos().getPage());
     }
 
+    @Override
     public void onSearchPhotoResponse(GetRecentResponse getRecentResponse) {
         mLastCalledService = LAST_CALLED_SEARCH;
         mCurrentPage++;

@@ -2,6 +2,7 @@ package com.mauri.android.flickrexample.interactors;
 
 import com.mauri.android.flickrexample.activities.MainActivity;
 import com.mauri.android.flickrexample.network.FlickrApi;
+import com.mauri.android.flickrexample.network.responses.GetPhotoInfoResponse;
 import com.mauri.android.flickrexample.network.responses.GetRecentResponse;
 import com.mauri.android.flickrexample.presenters.MainActivityPresenter;
 
@@ -18,7 +19,12 @@ import rx.schedulers.Schedulers;
 public class SearchPhotosInteractor implements Observer<GetRecentResponse> {
 
     private FlickrApi flickrApi;
-    private MainActivityPresenter mPresenter;
+    private SearchPhotoListener mListener;
+
+    public interface SearchPhotoListener{
+        void onSearchPhotoResponse(GetRecentResponse getRecentResponse);
+        void onErrorResponse(Throwable e);
+    }
 
     public SearchPhotosInteractor(FlickrApi flickrApi){
         this.flickrApi = flickrApi;
@@ -31,9 +37,8 @@ public class SearchPhotosInteractor implements Observer<GetRecentResponse> {
                 .subscribe(this);
     }
 
-    // TODO: this should be a generic Presenter, a Service is an atomic use case from business logic, it can be called from anywhere
-    public void setPresenter(MainActivityPresenter mainActivityPresenter){
-        this.mPresenter = mainActivityPresenter;
+    public void setListener(SearchPhotoListener searchPhotoListener){
+        this.mListener = searchPhotoListener;
     }
 
     @Override
@@ -43,11 +48,11 @@ public class SearchPhotosInteractor implements Observer<GetRecentResponse> {
 
     @Override
     public void onError(Throwable e) {
-        mPresenter.onErrorResponse(e);
+        mListener.onErrorResponse(e);
     }
 
     @Override
     public void onNext(GetRecentResponse getRecentResponse) {
-        mPresenter.onSearchPhotoResponse(getRecentResponse);
+        mListener.onSearchPhotoResponse(getRecentResponse);
     }
 }

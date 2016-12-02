@@ -25,8 +25,8 @@ public class MainActivityModule {
     @ActivityScope
     public MainActivityPresenter providesMainActivityPresenter(SearchPhotosInteractor searchPhotosInteractor, GetRecentPhotosInteractor getRecentPhotosInteractor){
         MainActivityPresenter mainPresenter  = new MainActivityPresenter(mainActivity, getRecentPhotosInteractor,searchPhotosInteractor);
-        getRecentPhotosInteractor.setPresenter(mainPresenter);
-        searchPhotosInteractor.setPresenter(mainPresenter);
+        getRecentPhotosInteractor.setListener(mainPresenter);
+        searchPhotosInteractor.setListener(mainPresenter);
         return mainPresenter;
     }
 

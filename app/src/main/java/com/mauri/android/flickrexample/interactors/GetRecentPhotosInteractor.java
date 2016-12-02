@@ -18,7 +18,13 @@ import rx.schedulers.Schedulers;
 public class GetRecentPhotosInteractor implements Observer<GetRecentResponse> {
 
     private FlickrApi flickrApi;
-    private MainActivityPresenter mPresenter;
+    private RecentPhotosListener mListener;
+
+    public interface RecentPhotosListener{
+        void onGetRecentResponse(GetRecentResponse getRecentResponse);
+        void onErrorResponse(Throwable e);
+    }
+
 
     public GetRecentPhotosInteractor(FlickrApi flickrApi){
         this.flickrApi = flickrApi;
@@ -31,9 +37,8 @@ public class GetRecentPhotosInteractor implements Observer<GetRecentResponse> {
                 .subscribe(this);
     }
 
-    // TODO: this should be a generic Presenter, a Service is an atomic use case from business logic, it should be called from anywhere
-    public void setPresenter(MainActivityPresenter mainActivityPresenter){
-        this.mPresenter = mainActivityPresenter;
+    public void setListener(RecentPhotosListener recentPhotosListener){
+        this.mListener = recentPhotosListener;
     }
 
     @Override
@@ -43,11 +48,11 @@ public class GetRecentPhotosInteractor implements Observer<GetRecentResponse> {
 
     @Override
     public void onError(Throwable e) {
-        mPresenter.onErrorResponse(e);
+        mListener.onErrorResponse(e);
     }
 
     @Override
     public void onNext(GetRecentResponse getRecentResponse) {
-        mPresenter.onGetRecentResponse(getRecentResponse);
+        mListener.onGetRecentResponse(getRecentResponse);
     }
 }
