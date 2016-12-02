@@ -81,6 +81,7 @@ public class FlickrImagesAdapter extends RecyclerView.Adapter<FlickrImagesAdapte
                     .listener(new RequestListener<String, GlideDrawable>() {
                         @Override
                         public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                            progress_bar.setVisibility(View.GONE);
                             return false;
                         }
 
@@ -90,6 +91,7 @@ public class FlickrImagesAdapter extends RecyclerView.Adapter<FlickrImagesAdapte
                             return false;
                         }
                     })
+                    .error(R.drawable.notfound)
                     .into(flickr_image);
             flickr_image.setOnClickListener(view -> PublicationActivity.newInstance(context ,photo.getUrl_c(),photo.getId()));
         }

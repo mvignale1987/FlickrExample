@@ -9,9 +9,13 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.mauri.android.flickrexample.R;
 import com.mauri.android.flickrexample.app.FlickrExampleApp;
 import com.mauri.android.flickrexample.app.dependencyinjection.modules.PublicationActivityModule;
@@ -50,6 +54,8 @@ public class PublicationActivity extends BaseActivity {
     TextView mPhotoTitleDescription;
     @BindView(R.id.photo_date)
     TextView mPhotoDate;
+    @BindView(R.id.progressBar)
+    ProgressBar progress_bar;
 
     @Inject
     PublicationActivityPresenter mPublicationActivityPresenter;
@@ -74,7 +80,23 @@ public class PublicationActivity extends BaseActivity {
         ActionBar.LayoutParams layoutParams = ((ActionBar.LayoutParams) getSupportActionBar().getCustomView().getLayoutParams());
         layoutParams.rightMargin = Math.round(getResources().getDimension(R.dimen.title_padding));
 
-        Glide.with(FlickrExampleApp.get(this)).load(getIntent().getStringExtra(PHOTO_URL)).into((mDetailImageView));
+        Glide.with(FlickrExampleApp.get(this))
+                .load(getIntent().getStringExtra(PHOTO_URL))
+                .listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        progress_bar.setVisibility(View.GONE);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        progress_bar.setVisibility(View.GONE);
+                        return false;
+                    }
+                })
+                .error(R.drawable.notfound)
+                .into((mDetailImageView));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mPublicationActivityPresenter.getPhotoInfo(getIntent().getStringExtra(PHOTO_ID));
     }
@@ -89,7 +111,12 @@ public class PublicationActivity extends BaseActivity {
         else
             mPhotoLocation.setText(R.string.location_placeholder);
         if ("0".equals(owner.getIconserver())) {
-            Glide.with(FlickrExampleApp.get(this)).load(R.drawable.buddyicon).asBitmap().centerCrop().into(mBindingUtils.getRoundedBitmapImageView(mUserIcon));
+            Glide.with(FlickrExampleApp.get(this))
+                    .load(R.drawable.buddyicon)
+                    .asBitmap()
+                    .centerCrop()
+                    .error(R.drawable.notfound)
+                    .into(mBindingUtils.getRoundedBitmapImageView(mUserIcon));
         } else {
             String iconUrl = String.format("http://farm%s.staticflickr.com/%s/buddyicons/%s.jpg", owner.getIconfarm(), owner.getIconserver(), owner.getNsid());
             Glide.with(FlickrExampleApp.get(this)).load(iconUrl).asBitmap().centerCrop().into(mBindingUtils.getRoundedBitmapImageView(mUserIcon));
@@ -102,7 +129,7 @@ public class PublicationActivity extends BaseActivity {
 
     @OnClick(R.id.detail_image_view)
     void onImageClick(View view) {
-        PhotoActivity.newInstance(this,mPhoto);
+        PhotoActivity.newInstance(this, mPhoto);
     }
 
     @Override
