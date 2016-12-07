@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.PublicationActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Transparent">
         </activity>
         <activity android:name=".activities.PhotoActivity"
             android:screenOrientation="portrait">

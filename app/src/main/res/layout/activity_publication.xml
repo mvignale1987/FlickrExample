@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/activity_publication"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -14,8 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="5dp">
+            android:layout_margin="5dp"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/detail_image_view"
@@ -23,51 +23,63 @@
                 android:layout_height="@dimen/photo_height"
                 android:scaleType="fitXY" />
 
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/image_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/photo_layout_margin"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/user_profile_icon"
-                    android:layout_width="@dimen/icon_width"
-                    android:layout_height="@dimen/icon_height"
-                    tools:src="@drawable/buddyicon" />
-                <TextView
-                    fontPath="fonts/Bryant-Bold.ttf"
-                    android:id="@+id/photo_username"
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/user_profile_icon"
-                    android:textSize="20sp"
-                    android:ellipsize="end"
-                    tools:text="daphneall"/>
-                <TextView
-                    android:id="@+id/photo_location"
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/user_profile_icon"
-                    android:layout_below="@id/photo_username"
-                    android:textSize="14sp"
-                    tools:text="Decorative Museum, Paris"/>
-                <TextView
-                    android:id="@+id/photo_date"
-                    android:layout_marginRight="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:textSize="14sp"
-                    tools:text="Sep 2"/>
+                    android:layout_marginTop="@dimen/photo_layout_margin"
+                    android:orientation="horizontal">
 
-            </RelativeLayout>
-            <TextView
-                android:id="@+id/photo_title_and_description"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                    <ImageView
+                        android:id="@+id/user_profile_icon"
+                        android:layout_width="@dimen/icon_width"
+                        android:layout_height="@dimen/icon_height"
+                        tools:src="@drawable/buddyicon" />
+
+                    <TextView
+                        android:id="@+id/photo_username"
+                        fontPath="fonts/Bryant-Bold.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/user_profile_icon"
+                        android:ellipsize="end"
+                        android:textSize="20sp"
+                        tools:text="daphneall" />
+
+                    <TextView
+                        android:id="@+id/photo_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/photo_username"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/user_profile_icon"
+                        android:textSize="14sp"
+                        tools:text="Decorative Museum, Paris" />
+
+                    <TextView
+                        android:id="@+id/photo_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:textSize="14sp"
+                        tools:text="Sep 2" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/photo_title_and_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </android.support.v7.widget.CardView>

@@ -1,6 +1,7 @@
 package com.mauri.android.flickrexample.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +24,12 @@ import butterknife.ButterKnife;
  * Created by mauri on 17/11/16.
  */
 
-public class FlickrImagesAdapter extends RecyclerView.Adapter<FlickrImagesAdapter.ViewHolder>{
+public class FlickrImagesAdapter extends RecyclerView.Adapter<FlickrImagesAdapter.ViewHolder> {
 
     private List<Photo> flickrImages;
     private Context context;
-    public FlickrImagesAdapter(List<Photo> flickrImages, Context ctx){
+
+    public FlickrImagesAdapter(List<Photo> flickrImages, Context ctx) {
         this.flickrImages = flickrImages;
         this.context = ctx;
     }
@@ -67,16 +69,16 @@ public class FlickrImagesAdapter extends RecyclerView.Adapter<FlickrImagesAdapte
             ButterKnife.bind(this, view);
         }
 
-        void bindPhoto(final Photo photo){
+        void bindPhoto(final Photo photo) {
             Glide.with(FlickrExampleApp.get(context))
                     .load(photo.getUrl_c())
-                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                    .asBitmap()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(flickr_image);
-
             flickr_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    PublicationActivity.newInstance(context ,photo.getUrl_c(),photo.getId());
+                    PublicationActivity.newInstance(context, view, photo.getUrl_c(), photo.getId());
                 }
             });
         }
