@@ -6,17 +6,14 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.internal.bind.TimeTypeAdapter;
 import com.mauri.android.flickrexample.app.Constants;
 import com.mauri.android.flickrexample.app.FlickrExampleApp;
-import com.mauri.android.flickrexample.app.dependencyinjection.scopes.ActivityScope;
 import com.mauri.android.flickrexample.interactors.GetPhotoInfoInteractor;
 import com.mauri.android.flickrexample.interactors.GetRecentPhotosInteractor;
 import com.mauri.android.flickrexample.interactors.SearchPhotosInteractor;
 import com.mauri.android.flickrexample.network.FlickrApi;
 import com.mauri.android.flickrexample.network.deserializers.PhotoJsonDeserializer;
 import com.mauri.android.flickrexample.network.responses.GetPhotoInfoResponse;
-import com.mauri.android.flickrexample.network.responses.GetRecentResponse;
 
 import java.io.IOException;
 import java.io.InputStream;

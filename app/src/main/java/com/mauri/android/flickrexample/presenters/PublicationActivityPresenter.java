@@ -2,19 +2,15 @@ package com.mauri.android.flickrexample.presenters;
 
 import com.mauri.android.flickrexample.activities.PublicationActivity;
 import com.mauri.android.flickrexample.interactors.GetPhotoInfoInteractor;
-import com.mauri.android.flickrexample.network.FlickrApi;
 import com.mauri.android.flickrexample.network.responses.GetPhotoInfoResponse;
 
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
  * Created by mauri on 17/11/16.
  */
 
-public class PublicationActivityPresenter {
+public class PublicationActivityPresenter implements GetPhotoInfoInteractor.GetPhotoInfoListener {
 
     private PublicationActivity publicationActivity;
     private GetPhotoInfoInteractor mGetPhotoInfoInteractor;
@@ -33,7 +29,7 @@ public class PublicationActivityPresenter {
         Timber.d("response");
     }
 
-
+    @Override
     public void onGetPhotoResponse(GetPhotoInfoResponse getPhotoInfoResponse) {
         publicationActivity.loadPhotoInfo(getPhotoInfoResponse.getPhoto());
     }

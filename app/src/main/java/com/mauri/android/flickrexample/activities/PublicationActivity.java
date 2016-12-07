@@ -2,18 +2,11 @@ package com.mauri.android.flickrexample.activities;
 
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -25,10 +18,14 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.mauri.android.flickrexample.R;
 import com.mauri.android.flickrexample.app.FlickrExampleApp;
 import com.mauri.android.flickrexample.app.dependencyinjection.modules.PublicationActivityModule;
@@ -39,14 +36,12 @@ import com.mauri.android.flickrexample.utils.BindingUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by mauri on 19/11/16.
@@ -75,6 +70,8 @@ public class PublicationActivity extends BaseActivity {
     TextView mPhotoDate;
     @BindView(R.id.image_info)
     LinearLayout mImageInfo;
+    @BindView(R.id.progressBar)
+    ProgressBar progress_bar;
 
     @Inject
     PublicationActivityPresenter mPublicationActivityPresenter;
@@ -116,7 +113,23 @@ public class PublicationActivity extends BaseActivity {
         mScrollView.setBackground(colorDrawable);
 
         final Bundle bundle = getIntent().getExtras();
-        Glide.with(FlickrExampleApp.get(this)).load(getIntent().getStringExtra(PHOTO_URL)).into((mDetailImageView));
+        Glide.with(FlickrExampleApp.get(this))
+                .load(getIntent().getStringExtra(PHOTO_URL))
+                .listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        progress_bar.setVisibility(View.GONE);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        progress_bar.setVisibility(View.GONE);
+                        return false;
+                    }
+                })
+                .error(R.drawable.notfound)
+                .into((mDetailImageView));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mPublicationActivityPresenter.getPhotoInfo(getIntent().getStringExtra(PHOTO_ID));
         if (savedInstanceState == null) {
@@ -156,7 +169,12 @@ public class PublicationActivity extends BaseActivity {
         else
             mPhotoLocation.setText(R.string.location_placeholder);
         if ("0".equals(owner.getIconserver())) {
-            Glide.with(FlickrExampleApp.get(this)).load(R.drawable.buddyicon).asBitmap().centerCrop().into(mBindingUtils.getRoundedBitmapImageView(mUserIcon));
+            Glide.with(FlickrExampleApp.get(this))
+                    .load(R.drawable.buddyicon)
+                    .asBitmap()
+                    .centerCrop()
+                    .error(R.drawable.notfound)
+                    .into(mBindingUtils.getRoundedBitmapImageView(mUserIcon));
         } else {
             String iconUrl = String.format("http://farm%s.staticflickr.com/%s/buddyicons/%s.jpg", owner.getIconfarm(), owner.getIconserver(), owner.getNsid());
             Glide.with(FlickrExampleApp.get(this)).load(iconUrl).asBitmap().centerCrop().into(mBindingUtils.getRoundedBitmapImageView(mUserIcon));

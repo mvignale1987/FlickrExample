@@ -1,15 +1,16 @@
 package com.mauri.android.flickrexample.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -62,12 +63,7 @@ public class MainActivity extends BaseActivity {
 
         mLoading = true;
         mainActivityPresenter.resetRecentImages();
-        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mainActivityPresenter.resetRecentImages();
-            }
-        });
+        mSwipeLayout.setOnRefreshListener(() -> mainActivityPresenter.resetRecentImages());
 
         mFlickrView.setHasFixedSize(true);
         mGridLayoutManager = new GridLayoutManager(this, GRID_VIEW);
@@ -100,6 +96,7 @@ public class MainActivity extends BaseActivity {
         mLoading = false;
         if (page == 1) flickrAdapter.clear();
         flickrAdapter.addAll(flickrImages);
+        flickrAdapter.notifyDataSetChanged();
         if (mSwipeLayout.isRefreshing())
             mSwipeLayout.setRefreshing(false);
 
@@ -139,6 +136,9 @@ public class MainActivity extends BaseActivity {
         if (!TextUtils.isEmpty(searchTerm)){
             mSwipeLayout.setRefreshing(true);
             mainActivityPresenter.searchImages(searchTerm);
+            mSearchField.clearFocus();
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(mSearchField.getWindowToken(),0);
         } else {
             showError("You must search for a term!!");
         }

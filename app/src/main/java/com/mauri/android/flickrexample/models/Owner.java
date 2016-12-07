@@ -8,13 +8,13 @@ import org.parceler.Parcel;
 
 @Parcel
 public class Owner {
-    private String nsid;
-    private String username;
-    private String realname;
-    private String location;
-    private int iconfarm;
-    private String iconserver;
-    private String path_alias;
+    String nsid;
+    String username;
+    String realname;
+    String location;
+    int iconfarm;
+    String iconserver;
+    String path_alias;
 
     public String getNsid() {
         return nsid;

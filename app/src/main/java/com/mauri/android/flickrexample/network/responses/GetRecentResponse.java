@@ -1,9 +1,6 @@
 package com.mauri.android.flickrexample.network.responses;
 
-import com.mauri.android.flickrexample.models.Photo;
 import com.mauri.android.flickrexample.models.Photos;
-
-import java.util.List;
 
 /**
  * Created by mauri on 17/11/16.

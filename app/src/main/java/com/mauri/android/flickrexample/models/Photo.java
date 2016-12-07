@@ -10,21 +10,21 @@ import java.util.Date;
 
 @Parcel
 public class Photo {
-    private String id;
-    private String owner;
-    private String secret;
-    private String server;
-    private int farm;
-    private String title;
-    private String url_c;
-    private int ispublic;
-    private int isfriend;
-    private int isfamily;
+    String id;
+    String owner;
+    String secret;
+    String server;
+    int farm;
+    String title;
+    String url_c;
+    int ispublic;
+    int isfriend;
+    int isfamily;
     // for flickr.photos.getInfo
-    private Owner full_owner;
-    private String description;
-    private int comments;
-    private Date photo_date;
+    Owner full_owner;
+    String description;
+    int comments;
+    Date photo_date;
 
     public String getId() {
         return id;
